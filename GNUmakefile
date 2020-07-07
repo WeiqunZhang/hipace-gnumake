@@ -34,7 +34,10 @@ ifeq ($(USE_CUDA),TRUE)
   libraries += -lcufft
 else
   HIPACE_sources := $(filter-out WrapCuFFT.cpp,$(HIPACE_sources))
-  libraries += -lfftw3_mpi -lfftw3
+  ifeq ($(USE_MPI),TRUE)
+    libraries += -lfftw3_mpi
+  endif
+  libraries += -lfftw3
   ifdef FFTW_HOME
     VPATH_LOCATIONS += $(FFTW_HOME)/include
     INCLUDE_LOCATIONS += $(FFTW_HOME)/include
